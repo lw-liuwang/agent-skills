@@ -1,0 +1,18 @@
+{
+  "docker": {
+    "container_name": "lw_vlm_infer",
+    "mount": {
+      "host": "/data/liuwang08",
+      "container": "/mount"
+    },
+    "project": {
+      "host": "/data/liuwang08/work_spec/project",
+      "container": "/mount/work_spec/project"
+    },
+    "network": {
+      "http_proxy": "",
+      "https_proxy": "",
+      "no_proxy": "localhost,127.0.0.1"
+    }
+  }
+}

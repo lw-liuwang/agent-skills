@@ -1,0 +1,16 @@
+{
+  "docker": {
+    "container_name": "lw_vlm_infer",
+    "mount": {
+      "host": "/data/liuwang08",
+      "container": "/mount"
+    }
+  },
+  "uv_env": {
+    "container_path": "/mount/work_spec/project/.venv"
+  },
+  "container_paths": {
+    "model": "/mount/work_spec/project/models",
+    "dataset": "/mount/work_spec/project/data"
+  }
+}

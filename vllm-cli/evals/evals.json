@@ -1,0 +1,53 @@
+{
+  "skill_name": "vllm-cli",
+  "evals": [
+    {
+      "id": 0,
+      "eval_name": "启动服务",
+      "prompt": "启动 vllm 服务，模型使用 models/Qwen3-0.6B，端口 8000",
+      "expected_output": "vLLM OpenAI-compatible API server is started on port 8000 for Qwen3-0.6B model",
+      "files": [],
+      "expectations": [
+        "The agent constructs a docker exec command to run inside the lw_agent container",
+        "The command uses the vLLM serve or api_server entrypoint",
+        "The command specifies --model pointing to /workspace/models/Qwen3-0.6B",
+        "The command specifies --port 8000",
+        "The agent activates the .venv environment",
+        "The agent informs the user that the service is blocking the terminal"
+      ]
+    },
+    {
+      "id": 1,
+      "eval_name": "运行压测",
+      "prompt": "对 Qwen3-0.6B 进行在线压测，服务地址 http://127.0.0.1:8000，请求速率 10 req/s，共 200 个 prompt",
+      "expected_output": "vLLM serving benchmark executed against the running server with throughput/latency metrics",
+      "files": [],
+      "expectations": [
+        "The agent constructs a docker exec command",
+        "The command uses vllm bench serve",
+        "The command specifies --model Qwen3-0.6B",
+        "The command specifies --base-url http://127.0.0.1:8000",
+        "The command specifies --request-rate 10",
+        "The command specifies --num-prompts 200",
+        "The agent activates the .venv environment"
+      ]
+    },
+    {
+      "id": 2,
+      "eval_name": "测试性能",
+      "prompt": "测试 models/Qwen3-0.6B 的性能，端口 8001，请求速率 5 req/s，共 100 个 prompt，input_len 256，output_len 128",
+      "expected_output": "vLLM server started in background on port 8001, benchmark run, results reported, cleanup offered",
+      "files": [],
+      "expectations": [
+        "The agent starts the server in background (nohup, &, or docker exec -d)",
+        "The agent waits for server readiness (polls /v1/models endpoint)",
+        "The command specifies --port 8001",
+        "The benchmark specifies --request-rate 5",
+        "The benchmark specifies --num-prompts 100",
+        "The benchmark specifies --input-len 256",
+        "The benchmark specifies --output-len 128",
+        "The agent asks about stopping the server after benchmark"
+      ]
+    }
+  ]
+}
